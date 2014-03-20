@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="../public/js/libs/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../public/js/libs/jquery.flash.js"></script>
+    <script type="text/javascript" src="../public/js/tool.js"></script>
+</head>
+<body>
+
+<div id="flash"></div>
+<script>
+    var url = getQueryString("url");
+   // $("#flash").html('<embed src="' + url + '" allowFullScreen="true" quality="high" width="300" height="300" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"    id="flash"></embed>');
+
+    $('#flash').flash({
+        src: url,
+        width: 300,
+        height: 300
+    });
+</script>
+</body>
+</html>

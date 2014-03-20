@@ -1,0 +1,8 @@
+{
+    "name": "nw-demo",
+    "main": "app.html",
+    "webkit": {
+        "plugin": true
+    }
+
+}

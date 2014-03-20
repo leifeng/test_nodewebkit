@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="Public/js/libs/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="Public/js/libs/RQ.js"></script>
+    <script>
+        var tool = require('./Client/tools/tool');
+        var express = require('express')
+                , app = express()
+                , http = require('http')
+                , server = http.createServer(app)
+                , io = require('socket.io').listen(server)
+                , gui = require('nw.gui')
+                , win = gui.Window.get()
+                , win2 = gui.Window.get();
+
+        app.configure(function () {
+            app.set('views', 'Client/views');
+            app.engine('html', require('ejs').renderFile);
+            app.use(express.bodyParser({ uploadDir: "./Uploads" }));
+            app.use(express.methodOverride());
+            app.use(app.router);
+            app.use(express['static']('./Public'));
+        });
+
+        require("./Client/routers/router")(app);
+
+        io.configure(function () {
+            io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+        });
+
+        io.sockets.on("connection", function (socket) {
+            socket.on('conn',function(){
+                console.log('已连接');
+                $("#status").css('background-color','#7FF87F').text('已连接');
+            })
+            socket.on('getImg', function (data) {
+                win2 = gui.Window.get(
+                        window.open('./Server/img.html?url=.' + data.url, 'self')
+                );
+                socket.emit('server', { msg: 'ok' });
+            });
+            socket.on('getVideo', function (data) {
+                win2 = gui.Window.open('./Server/v.html?url=' + data.url, {
+                    position: 'center',
+                    width: 300,
+                    height: 300
+                });
+                socket.emit('server', { msg: 'ok' });
+
+            });
+            socket.on('disconnect', function () {
+                console.log('已断开');
+                $("#status").css('background-color','#d8d8d8').text('已断开');
+            });
+
+        });
+        server.listen(3000);
+
+
+    </script>
+</head>
+<body>
+<div id="qrcode" style="width: 256px; margin: 20px auto"></div>
+<div id="status" style="width: 50%;height: 30px;margin: 10px auto;text-align: center;line-height: 25px;height: 25px"></div>
+<script>
+//    tool.localIp(function (data) {
+//        $('#qrcode').qrcode({
+//            text: 'http://' + data + ":3000/"
+//        });
+//    });
+</script>
+</body>
+</html>

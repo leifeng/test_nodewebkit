@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/libs/jquery-1.10.2.js"></script>
+    <script src="/js/libs/bootstrap.min.js"></script>
+    <script src="/js/libs/handlebars-1.1.2.js"></script>
+    <script src="/js/libs/ember-1.2.0.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        .list-group {
+            margin-top: 10px;
+        }
+
+        #img {
+            width: 104px;
+            font: normal 22px Tahoma;
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+        window.ip='<%=ip%>';
+    </script>
+    <script src="/js/app.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="application">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#index">{{title}}</a>
+        </div>
+    </nav>
+    <div class="container">
+        {{outlet}}
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="index">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#home" data-toggle="tab">首页</a></li>
+        <li><a href="#push " data-toggle="tab">推送</a></li>
+        <li><a href="#play" data-toggle="tab">娱乐</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="home">...</div>
+        <div class="tab-pane" id="push">
+            <div class="list-group">
+                <a href="#picture" class="list-group-item">图片推送</a>
+                <a href="#video" class="list-group-item">视频推送</a>
+                <a href="#music" class="list-group-item">音乐推送</a>
+                <a href="#message" class="list-group-item">消息推送</a>
+            </div>
+        </div>
+        <div class="tab-pane" id="play">...</div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="picture">
+    <form id="upload_form" enctype="multipart/form-data" method="post" action="/upload">
+        <div style="width:100%;text-align:center">
+            <input type="file" name="img" id="img">
+            <button type="submit" class="btn btn-default">发送</button>
+        </div>
+    </form>
+</script>
+<script type="text/x-handlebars" data-template-name="video">
+    <div class="tab-content">
+            <div class="list-group">
+                <a href="javascript:;" class="list-group-item active"><div style="text-align:right" {{action 'Back'}}>返回</div></a>
+                {{#each App.videoData.videoList}}
+                <a href="javascript:;" class="list-group-item" {{action 'SendVideo' link}} >{{title}}</a>
+                {{/each}}
+            </div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="music">
+    file3
+</script>
+<script type="text/x-handlebars" data-template-name="message">
+    file4
+</script>
+</body>
+</html>

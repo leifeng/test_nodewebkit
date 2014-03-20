@@ -1,0 +1,15 @@
+/.idea
+/node_modules/ejs
+/node_modules/express
+/node_modules/async/lib
+/node_modules/iconv-lite
+/node_modules/jquery/src
+/node_modules/socket.io/lib/transports
+/node_modules/jquery
+/node_modules/socket.io
+/node_modules/async
+/node_modules/.bin
+/*.exe
+/Uploads
+/*.dll
+/*.pak
